@@ -1,6 +1,8 @@
 // URL: https://leetcode.com/problems/binary-search/description/ 
 
 using System.Diagnostics.CodeAnalysis;
+using System.Xml.Schema;
+using System.Xml.Xsl;
 
 namespace LeetCode;
 
@@ -12,14 +14,38 @@ public class BinarySearchLC
         var input = new[] { -1, 0, 3, 5, 9, 12 };
         var target = 9;
         var expected = 4;
-        Assert.Equal(expected, Algo(input, target));
+        Assert.Equal(expected, BinarySearchTree(input, target));
+        Assert.Equal(expected, BinarySearch(input, target));
     }
 
     //Naive approach of building binary tree??
-    public int Algo(int[] nums, int target)
+    public int BinarySearchTree(int[] nums, int target)
     {
         var tree = BinTree.FromArray(nums);
         return tree.Search(target);
+    }
+
+    //Real binary search by partitioning
+    public int BinarySearch(int[] nums, int target)
+    {
+        var (left, right) = (0, nums.Length - 1);
+        int mid = (right - left) / 2;
+        for (int i = 0; i < nums.Length; i++)
+        {
+            if (nums[i] == target) return i;
+            if (i < nums[mid])
+            {
+                right = mid;
+            }
+            else
+            {
+                left = mid;
+            }
+
+            mid = (right - left) / 2;
+        }
+
+        return -1;
     }
 
     class BinTree
