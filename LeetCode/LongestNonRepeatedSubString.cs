@@ -15,9 +15,8 @@ public class LongestNonRepeatedSubString
     public int Algo(string s)
     {
         if (s.Length == 0) return 0;
-        if (s.Length == 1) return 1;
         var firstPointer = 0;
-        var secondPointer = 1;
+        var secondPointer = 0;
         HashSet<char> chars = new HashSet<char>();
         var maxLength = 1;
         while (secondPointer < s.Length)
