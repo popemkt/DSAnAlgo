@@ -41,6 +41,7 @@ public class WordBreakLC
 
     public bool WordBreak(string s, IList<string> wordDict)
     {
+        //This is kind of different, we use the problem's limits to initialize the dp/breakable, but the general idea is the same
         HashSet<string> dict = new HashSet<string>(wordDict);
         int[] breakable = new int[20];
         Array.Fill(breakable, -21);
