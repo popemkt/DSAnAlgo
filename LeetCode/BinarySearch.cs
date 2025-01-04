@@ -1,9 +1,5 @@
 // URL: https://leetcode.com/problems/binary-search/description/ 
 
-using System.Diagnostics.CodeAnalysis;
-using System.Xml.Schema;
-using System.Xml.Xsl;
-
 namespace LeetCode;
 
 public class BinarySearchLC
@@ -29,20 +25,18 @@ public class BinarySearchLC
     public int BinarySearch(int[] nums, int target)
     {
         var (left, right) = (0, nums.Length - 1);
-        int mid = (right - left) / 2;
-        for (int i = 0; i < nums.Length; i++)
+        
+        while (left <= right)
         {
-            if (nums[i] == target) return i;
-            if (i < nums[mid])
-            {
-                right = mid;
-            }
+            int mid = left + (right - left) / 2;
+            
+            if (nums[mid] == target)
+                return mid;
+                
+            if (target < nums[mid])
+                right = mid - 1;
             else
-            {
-                left = mid;
-            }
-
-            mid = (right - left) / 2;
+                left = mid + 1;
         }
 
         return -1;
