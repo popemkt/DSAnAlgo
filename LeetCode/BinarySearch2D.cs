@@ -15,10 +15,10 @@ public class BinarySearch2D
         };
         var target = 23;
         var expected = true;
-        Assert.Equal(expected, BinarySearch(input, target));
+        Assert.Equal(expected, BinarySearchWithCoordinateTranslation(input, target));
+        Assert.Equal(expected, DoubleBinarySearch(input, target));
     }
-
-    public bool BinarySearch(int[][] matrix, int target)
+    public bool BinarySearchWithCoordinateTranslation(int[][] matrix, int target)
     {
         var rows = matrix.Length;
         var cols = matrix[0].Length;
@@ -49,6 +49,52 @@ public class BinarySearch2D
                 left = mid + 1;
         }
 
+        return false;
+    }
+
+    public bool DoubleBinarySearch(int[][] matrix, int target)
+    {
+        var rows = matrix.Length;
+        var cols = matrix[0].Length;
+
+        // First binary search to find the potential row
+        var top = 0;
+        var bottom = rows - 1;
+        
+        while (top <= bottom)
+        {
+            var row = bottom + (top - bottom) / 2;
+            
+            if (target > matrix[row][cols - 1])
+                top = row + 1;
+            else if (target < matrix[row][0])
+                bottom = row - 1;
+            else
+                // Found the row that might contain our target
+                return BinarySearchRow(matrix[row], target);
+        }
+        
+        return false;
+    }
+    
+    private bool BinarySearchRow(int[] row, int target)
+    {
+        var left = 0;
+        var right = row.Length - 1;
+        
+        while (left <= right)
+        {
+            var mid = left + (right - left) / 2;
+            
+            if (row[mid] == target)
+                return true;
+                
+            if (target < row[mid])
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+        
         return false;
     }
 }
